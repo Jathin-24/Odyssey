@@ -41,7 +41,7 @@
 <div class="admin-top">
     <div class="admin-title-box">
         <h1>Odyssey Database Manifest</h1>
-        <p>Live synchronized records stored in MySQL Database (odyssey_db) with JPA</p>
+        <p>Live synchronized records stored in PostgreSQL Database (Supabase) with JPA</p>
     </div>
     <div class="admin-actions">
         <a th:href="@{/admin/responses}" class="admin-btn" style="background: rgba(25, 211, 230, 0.18); border-color: rgba(25, 211, 230, 0.45); color: var(--aqua); font-weight: 600;">
@@ -135,6 +135,10 @@
     <div class="stat-card">
         <div class="stat-card-title">Teams Registered</div>
         <div class="stat-card-val" th:text="${totalTeams != null ? totalTeams : 0}">0</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-title">Database Engine</div>
+        <div class="stat-card-val" style="font-size: 1.4rem; padding-top: 0.4rem; color: var(--foam);">PostgreSQL (Supabase)</div>
     </div>
     <div class="stat-card">
         <div class="stat-card-title">Total Amount Received (Online)</div>
@@ -311,7 +315,7 @@
     <div class="delete-modal-card">
         <div class="delete-modal-icon">&#128465;</div>
         <h3>Delete Registration Record?</h3>
-        <p>Are you sure you want to delete this record? It will be <strong>permanently removed</strong> from the MySQL database (<code>odyssey_db.registrations</code>).</p>
+        <p>Are you sure you want to delete this record? It will be <strong>permanently removed</strong> from the PostgreSQL database (<code>public.registrations</code>).</p>
         
         <div class="delete-modal-preview-box">
             <div><strong>Pass ID:</strong> <span id="modalDeleteIdText" style="color: var(--aqua); font-family: monospace;">ODY-0000</span></div>

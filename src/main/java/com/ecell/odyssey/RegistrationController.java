@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +27,19 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
     private final ObjectMapper objectMapper;
+    private final SupabaseStorageService supabaseStorage;
+    private final String adminUsername;
+    private final String adminPassword;
 
-    public RegistrationController(RegistrationService registrationService, ObjectMapper objectMapper) {
+    public RegistrationController(RegistrationService registrationService, ObjectMapper objectMapper,
+            SupabaseStorageService supabaseStorage,
+            @Value("${odyssey.admin.username:admin}") String adminUsername,
+            @Value("${odyssey.admin.password:admin123}") String adminPassword) {
         this.registrationService = registrationService;
         this.objectMapper = objectMapper;
+        this.supabaseStorage = supabaseStorage;
+        this.adminUsername = adminUsername;
+        this.adminPassword = adminPassword;
     }
 
     @GetMapping("/register")
@@ -185,27 +195,43 @@ public class RegistrationController {
         }
 
         // Handle Payment Screenshot Upload
+        // Preferred: Supabase Storage (permanent public URL). Fallback: local uploads/ folder.
         String paymentImagePath = "";
         if (paymentImage != null && !paymentImage.isEmpty()) {
-            try {
-                Path uploadDir = Paths.get("uploads", "payments");
-                if (!Files.exists(uploadDir)) {
-                    Files.createDirectories(uploadDir);
+            String originalFilename = paymentImage.getOriginalFilename();
+            String ext = "";
+            if (originalFilename != null && originalFilename.contains(".")) {
+                ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+            }
+            String safeRoll = rollNumber.replaceAll("[^a-zA-Z0-9]", "");
+            String filename = "pay_" + System.currentTimeMillis() + "_" + safeRoll + ext;
+
+            // 1. Try Supabase Storage first
+            if (supabaseStorage.isConfigured()) {
+                try {
+                    paymentImagePath = supabaseStorage.upload("payments/" + filename,
+                            paymentImage.getBytes(), paymentImage.getContentType());
+                } catch (IOException e) {
+                    paymentImagePath = "";
                 }
-                String originalFilename = paymentImage.getOriginalFilename();
-                String ext = "";
-                if (originalFilename != null && originalFilename.contains(".")) {
-                    ext = originalFilename.substring(originalFilename.lastIndexOf("."));
-                }
-                String filename = "pay_" + System.currentTimeMillis() + "_" + rollNumber.replaceAll("[^a-zA-Z0-9]", "")
-                        + ext;
-                Path destination = uploadDir.resolve(filename);
-                try (InputStream inputStream = paymentImage.getInputStream()) {
-                    Files.copy(inputStream, destination, StandardCopyOption.REPLACE_EXISTING);
-                }
-                paymentImagePath = "/uploads/payments/" + filename;
-            } catch (IOException e) {
+            }
+
+            // 2. Fallback to local disk
+            if (paymentImagePath == null || paymentImagePath.isEmpty()) {
                 paymentImagePath = "";
+                try {
+                    Path uploadDir = Paths.get("uploads", "payments");
+                    if (!Files.exists(uploadDir)) {
+                        Files.createDirectories(uploadDir);
+                    }
+                    Path destination = uploadDir.resolve(filename);
+                    try (InputStream inputStream = paymentImage.getInputStream()) {
+                        Files.copy(inputStream, destination, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    paymentImagePath = "/uploads/payments/" + filename;
+                } catch (IOException e) {
+                    paymentImagePath = "";
+                }
             }
         }
 
@@ -384,7 +410,7 @@ public class RegistrationController {
             @RequestParam(value = "redirectUrl", required = false) String redirectUrl,
             HttpSession session,
             Model model) {
-        if ("finance".equalsIgnoreCase(username.trim()) && "Toinfinityandbeyond".equals(password)) {
+        if (adminUsername.equals(username.trim()) && adminPassword.equals(password)) {
             session.setAttribute("adminLoggedIn", true);
             if (redirectUrl != null && !redirectUrl.isBlank() && redirectUrl.startsWith("/admin")
                     && !redirectUrl.contains("login")) {

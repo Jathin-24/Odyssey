@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<span>⚓ Verifying Manifest &amp; Recording to MySQL...</span>';
+                submitBtn.innerHTML = '<span>⚓ Verifying Manifest &amp; Recording to Database...</span>';
                 submitBtn.style.opacity = '0.75';
             }
         });
