@@ -447,6 +447,17 @@ public class Registration {
     public String groupId() { return getGroupId(); }
     public LocalDateTime registeredAt() { return getRegisteredAt(); }
 
+    public boolean isLeader() {
+        if (participantRole != null && !participantRole.isBlank()) {
+            return "Leader".equalsIgnoreCase(participantRole.trim());
+        }
+        return id == null || !id.contains("-M");
+    }
+
+    public boolean leader() {
+        return isLeader();
+    }
+
     public String getAllEmailsCsv() {
         List<String> emails = new ArrayList<>();
         if (leaderEmail != null && !leaderEmail.isBlank()) emails.add(leaderEmail.trim());

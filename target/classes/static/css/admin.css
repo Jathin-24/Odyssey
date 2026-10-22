@@ -400,6 +400,9 @@
             border-radius: 6px;
             border: 1px solid rgba(25, 211, 230, 0.25);
             transition: all 0.2s;
+            white-space: nowrap;
+            display: inline-block;
+            letter-spacing: 0.5px;
         }
         .code-link:hover {
             background: var(--aqua);

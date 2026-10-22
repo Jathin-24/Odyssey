@@ -384,7 +384,7 @@ public class RegistrationController {
             @RequestParam(value = "redirectUrl", required = false) String redirectUrl,
             HttpSession session,
             Model model) {
-        if ("admin".equals(username.trim()) && "admin123".equals(password)) {
+        if ("finance".equalsIgnoreCase(username.trim()) && "Toinfinityandbeyond".equals(password)) {
             session.setAttribute("adminLoggedIn", true);
             if (redirectUrl != null && !redirectUrl.isBlank() && redirectUrl.startsWith("/admin")
                     && !redirectUrl.contains("login")) {
@@ -425,10 +425,37 @@ public class RegistrationController {
             return "redirect:/admin/login?redirect=/admin/registrations";
         }
         List<Registration> list = registrationService.getAll();
+        long totalParticipants = list.size();
+        long totalTeams = list.stream()
+                .map(r -> {
+                    if (r.getGroupId() != null && !r.getGroupId().isBlank()) {
+                        return r.getGroupId().trim();
+                    }
+                    if (r.getTeamName() != null && !r.getTeamName().isBlank()) {
+                        return r.getTeamName().trim().toLowerCase();
+                    }
+                    if (r.getId() != null) {
+                        return r.getId().replaceAll("-M\\d+$", "").trim();
+                    }
+                    return "";
+                })
+                .filter(s -> !s.isBlank())
+                .distinct()
+                .count();
+
+        long totalAmountReceived = list.stream()
+                .filter(Registration::isLeader)
+                .mapToLong(r -> r.getAmountPaid() > 0 ? r.getAmountPaid() : (r.getTeamSize() > 0 ? r.getTeamSize() * 100L : 300L))
+                .sum();
+
         model.addAttribute("eventName", "Odyssey");
         model.addAttribute("tagline", "Beyond the Horizon");
         model.addAttribute("registrations", list);
-        model.addAttribute("totalCount", registrationService.getTotalCount());
+        model.addAttribute("totalCount", totalParticipants);
+        model.addAttribute("totalTeams", totalTeams);
+        model.addAttribute("totalParticipants", totalParticipants);
+        model.addAttribute("totalAmountReceived", totalAmountReceived);
+        model.addAttribute("totalRevenue", totalAmountReceived);
         model.addAttribute("deptCounts", registrationService.getDepartmentCounts());
         return "admin";
     }
@@ -534,7 +561,7 @@ public class RegistrationController {
                     escapeCsv(r.getLeaderPhone()),
                     escapeCsv(r.getLeaderEmail()),
                     String.valueOf(r.getTeamSize()),
-                    String.valueOf(r.getAmountPaid()),
+                    r.isLeader() ? String.valueOf(r.getAmountPaid()) : "-",
                     escapeCsv(r.getUtr()),
                     escapeCsv(r.getPaymentImagePath()),
                     escapeCsv(r.getRegisteredAt() != null ? r.getRegisteredAt().toString() : "")));
@@ -595,7 +622,7 @@ public class RegistrationController {
             writer.println("<td>" + escapeHtml(r.getLeaderPhone()) + "</td>");
             writer.println("<td>" + escapeHtml(r.getLeaderEmail()) + "</td>");
             writer.println("<td>" + r.getTeamSize() + "</td>");
-            writer.println("<td>" + r.getAmountPaid() + "</td>");
+            writer.println("<td>" + (r.isLeader() ? r.getAmountPaid() : "-") + "</td>");
             writer.println("<td>" + escapeHtml(r.getUtr()) + "</td>");
             writer.println("<td>" + escapeHtml(r.getPaymentImagePath()) + "</td>");
             writer.println(

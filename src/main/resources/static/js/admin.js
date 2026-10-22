@@ -59,10 +59,15 @@
             }
         }
 
+        var visibleIndex = 1;
         rows.forEach(function(row) {
             var rowDept = row.getAttribute('data-dept');
             if (dept === 'ALL' || rowDept === dept) {
                 row.style.display = '';
+                var snoCell = row.querySelector('.sno-cell');
+                if (snoCell) {
+                    snoCell.textContent = visibleIndex++;
+                }
             } else {
                 row.style.display = 'none';
             }
@@ -227,4 +232,35 @@
                 closeDeleteModal();
             }
         });
+    }
+
+    /* Dynamic Total Amount Received Calculation */
+    function updateTotalAmountReceived() {
+        var totalEl = document.getElementById('totalAmountReceivedVal');
+        if (!totalEl) return;
+
+        var feeEls = document.querySelectorAll('.fee-amount-val');
+        var sum = 0;
+        feeEls.forEach(function(el) {
+            var fee = parseInt(el.getAttribute('data-fee') || el.textContent.replace(/[^0-9]/g, ''), 10);
+            if (!isNaN(fee) && fee > 0) {
+                sum += fee;
+            }
+        });
+
+        var serverAttr = totalEl.getAttribute('data-server-amount');
+        var serverAmount = (serverAttr !== null && serverAttr !== '') ? parseInt(serverAttr, 10) : 0;
+        if (!isNaN(serverAmount) && serverAmount > 0) {
+            totalEl.textContent = '₹' + serverAmount;
+        } else if (sum > 0) {
+            totalEl.textContent = '₹' + sum;
+        } else {
+            totalEl.textContent = '₹0';
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateTotalAmountReceived);
+    } else {
+        updateTotalAmountReceived();
     }

@@ -18,7 +18,12 @@
     <a th:href="@{/}" href="/" class="logo" aria-label="Odyssey">
         <img th:src="@{/images/logo-horizontal.png}" src="/images/logo-horizontal.png" alt="E-Cell Odyssey Logo" class="nav-logo-img">
     </a>
-    <ul>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navMenu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+    </button>
+    <ul id="navMenu">
         <li><a th:href="@{/}" href="/">Home</a></li>
         <li><a th:href="@{/register}" href="/register">Register Team</a></li>
         <li><a th:href="@{/admin/registrations}" href="/admin/registrations" style="color: var(--aqua); font-weight: 600;">Database Manifest</a></li>
@@ -128,12 +133,14 @@
         <div class="stat-card-val" th:text="${deptCounts != null ? deptCounts.size() : 0}">0</div>
     </div>
     <div class="stat-card">
-        <div class="stat-card-title">Database Engine</div>
-        <div class="stat-card-val" style="font-size: 1.4rem; padding-top: 0.4rem; color: var(--foam);">MySQL 8.0 (odyssey_db)</div>
+        <div class="stat-card-title">Teams Registered</div>
+        <div class="stat-card-val" th:text="${totalTeams != null ? totalTeams : 0}">0</div>
     </div>
     <div class="stat-card">
-        <div class="stat-card-title">JPA Entity Table</div>
-        <div class="stat-card-val" style="font-size: 1.4rem; padding-top: 0.4rem; color: var(--foam);">registrations</div>
+        <div class="stat-card-title">Total Amount Received (Online)</div>
+        <div class="stat-card-val" id="totalAmountReceivedVal" style="color: #4ade80;"
+             th:attr="data-server-amount=${totalAmountReceived}"
+             th:text="'&#8377;' + (${totalAmountReceived != null and totalAmountReceived > 0} ? ${totalAmountReceived} : 0)">&#8377;0</div>
     </div>
 </div>
 
@@ -211,24 +218,26 @@
         <table class="manifest-table">
             <thead>
                 <tr>
-                    <th>Pass ID</th>
-                    <th>Roll No</th>
+                    <th style="width: 50px; text-align: center; white-space: nowrap;">S.No</th>
+                    <th style="white-space: nowrap;">Pass ID</th>
+                    <th style="white-space: nowrap;">Roll No</th>
                     <th>Student Name</th>
                     <th>Dept, Year &amp; Sec</th>
                     <th>Phone &amp; Email</th>
-                    <th>Group Size</th>
-                    <th>Fee Paid</th>
+                    <th style="white-space: nowrap;">Group Size</th>
+                    <th style="white-space: nowrap;">Fee Paid</th>
                     <th>UTR Ref</th>
                     <th>Payment Proof</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="r : ${registrations}" th:attr="data-dept=${r.dept}">
-                    <td>
-                        <a th:href="@{'/register/pass/' + ${r.id}}" class="code-link" th:text="${r.id}">ODY-1234</a>
+                <tr th:each="r, iterStat : ${registrations}" th:attr="data-dept=${r.dept}">
+                    <td style="text-align: center; color: var(--muted); font-weight: 600; white-space: nowrap;" class="sno-cell" th:text="${iterStat.count}">1</td>
+                    <td style="white-space: nowrap;">
+                        <a th:href="@{'/register/pass/' + ${r.id}}" class="code-link" style="white-space: nowrap; display: inline-block;" th:text="${r.id}">ODY-1234</a>
                     </td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <strong style="color: var(--aqua);" th:text="${r.rollNumber}">B21CS042</strong>
                     </td>
                     <td>
@@ -252,11 +261,18 @@
                         <div style="font-size: 0.85rem;" th:text="${r.leaderPhone}">+91 9876543210</div>
                         <div style="font-size: 0.75rem; color: var(--muted);" th:text="${r.leaderEmail}">rahul@example.com</div>
                     </td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <span th:text="${r.teamSize} + (${r.teamSize == 1} ? ' Person' : ' Persons')">1 Person</span>
                     </td>
-                    <td>
-                        <strong style="color: #4ade80;" th:text="'&#8377;' + ${r.amountPaid}">&#8377;100</strong>
+                    <td style="white-space: nowrap;">
+                        <th:block th:if="${r.participantRole == null or r.participantRole == 'Leader' or r.participantRole == '' or !r.id.contains('-M')}">
+                            <strong style="color: #4ade80;" class="fee-amount-val"
+                                    th:attr="data-fee=${r.amountPaid > 0 ? r.amountPaid : (r.teamSize > 0 ? r.teamSize * 100 : 300)}"
+                                    th:text="'&#8377;' + ${r.amountPaid > 0 ? r.amountPaid : (r.teamSize > 0 ? r.teamSize * 100 : 300)}">&#8377;300</strong>
+                        </th:block>
+                        <th:block th:unless="${r.participantRole == null or r.participantRole == 'Leader' or r.participantRole == '' or !r.id.contains('-M')}">
+                            <span style="color: var(--muted); font-weight: 600; font-size: 1.1rem; display: inline-block; padding-left: 0.25rem;">&minus;</span>
+                        </th:block>
                     </td>
                     <td>
                         <span style="font-family: monospace; font-size: 0.85rem; background: rgba(2, 17, 31, 0.6); padding: 0.2rem 0.4rem; border-radius: 4px;" th:text="${r.utr}">UTR123</span>
@@ -354,6 +370,7 @@
     </div>
 </div>
 
+<script th:src="@{/js/navbar.js(v=1)}" src="/js/navbar.js?v=1"></script>
 <script th:src="@{/js/admin.js(v=1)}" src="/js/admin.js?v=1"></script>
 </body>
 </html>

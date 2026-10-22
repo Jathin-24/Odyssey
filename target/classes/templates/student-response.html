@@ -24,7 +24,12 @@
         <a th:href="@{/}" href="/" class="logo" aria-label="Odyssey">
             <img th:src="@{/images/logo-horizontal.png}" src="/images/logo-horizontal.png" alt="E-Cell Odyssey Logo" class="nav-logo-img">
         </a>
-        <ul>
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navMenu">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+        </button>
+        <ul id="navMenu">
             <li><a th:href="@{/}" href="/">Home</a></li>
             <li><a th:href="@{/register}" href="/register">Register Team</a></li>
             <li><a th:href="@{/find-ticket}" href="/find-ticket">Find My Ticket</a></li>
@@ -199,6 +204,7 @@
         <p>&copy; 2026 <span th:text="${eventName}">Odyssey</span> &middot; Designed and Developed by <a href="https://kitsecellgnt.com/" target="_blank" rel="noopener noreferrer">KITS Entrepreneurship Cell</a> &middot; <a href="https://kitsecellgnt.com/" target="_blank" rel="noopener noreferrer">kitsecellgnt.com</a></p>
     </footer>
 
+    <script th:src="@{/js/navbar.js(v=1)}" src="/js/navbar.js?v=1"></script>
     <script th:src="@{/js/student-response.js(v=1)}" src="/js/student-response.js?v=1"></script>
 </body>
 </html>

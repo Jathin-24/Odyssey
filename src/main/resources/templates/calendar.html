@@ -24,7 +24,12 @@
         <a th:href="@{/}" href="/" class="logo" aria-label="Odyssey">
             <img th:src="@{/images/logo-horizontal.png}" src="/images/logo-horizontal.png" alt="E-Cell Odyssey Logo" class="nav-logo-img">
         </a>
-        <ul>
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navMenu">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+        </button>
+        <ul id="navMenu">
             <li><a th:href="@{/}" href="/">Home</a></li>
             <li><a th:href="@{/#about}" href="/#about">About</a></li>
             <li><a th:href="@{/#stages}" href="/#stages">Stages</a></li>
@@ -448,6 +453,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script th:src="@{/js/navbar.js(v=1)}" src="/js/navbar.js?v=1"></script>
     <script th:src="@{/js/calendar.js(v=6)}" src="/js/calendar.js?v=6"></script>
 </body>
 </html>
