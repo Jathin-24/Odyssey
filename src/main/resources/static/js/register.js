@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const baseUpiId = "7981705559-4@ybl";
     const basePhone = "7981705559";
-    const payeeName = "Shaik Sumaya";
+    const payeeName = "Shaik  Sumaya";
 
     function updateTeamAndPayment(size) {
         // Enforce 3 to 5 persons per group
@@ -65,12 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
             amountSub.textContent = `(₹100 × ${size} persons)`;
         }
 
-        // Clean UPI URI without bank-flagged tn notes
-        const upiUri = `upi://pay?pa=${encodeURIComponent(baseUpiId)}&pn=${encodeURIComponent(payeeName)}&am=${totalAmount}&cu=INR`;
+        // Authentic PhonePe Standee Scanner QR URI (mode=02, purpose=00, mc=0000)
+        // Eliminates locked fixed-amount (am) parameter which triggers bank & PhonePe security decline blocks.
+        // Opens directly in scan-and-pay mode for Shaik Sumaya.
+        const scannerUpiUri = `upi://pay?pa=${encodeURIComponent(baseUpiId)}&pn=${encodeURIComponent(payeeName)}&mc=0000&mode=02&purpose=00`;
         
         if (upiPayLink) {
-            upiPayLink.href = upiUri;
+            upiPayLink.href = scannerUpiUri;
             upiPayLink.innerHTML = `<span>📱 Tap to Pay ₹${totalAmount} via UPI App</span> &rarr;`;
+        }
+
+        const amountHint = document.getElementById('amountHint');
+        if (amountHint) {
+            amountHint.textContent = totalAmount;
         }
     }
 
@@ -153,6 +160,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (copyPhoneBtn) {
         copyPhoneBtn.addEventListener('click', () => {
             copyToClipboard(basePhone, copyPhoneBtn, copyPhoneBtnText, '✓ Copied Number!', basePhone);
+        });
+    }
+
+    if (upiPayLink) {
+        upiPayLink.addEventListener('click', (e) => {
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            if (!isMobile) {
+                // If on desktop where upi:// protocol isn't handled, smoothly scroll to official standee QR to scan
+                e.preventDefault();
+                const standee = document.getElementById('officialStandeeImg');
+                if (standee) {
+                    standee.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    const wrapper = standee.closest('.phonepe-standee-wrapper');
+                    if (wrapper) {
+                        wrapper.style.outline = '3px solid var(--aqua)';
+                        wrapper.style.boxShadow = '0 0 25px rgba(25, 211, 230, 0.6)';
+                        setTimeout(() => {
+                            wrapper.style.outline = '';
+                            wrapper.style.boxShadow = '';
+                        }, 2500);
+                    }
+                }
+            }
         });
     }
 

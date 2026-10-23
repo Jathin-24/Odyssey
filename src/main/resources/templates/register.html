@@ -405,10 +405,13 @@
 
                                 <div class="upi-actions-col">
                                     <a id="upiPayLink"
-                                        href="upi://pay?pa=7981705559-4@ybl&amp;pn=Shaik%20Sumaya&amp;am=300&amp;cu=INR"
+                                        href="upi://pay?pa=7981705559-4@ybl&amp;pn=Shaik%20%20Sumaya&amp;mc=0000&amp;mode=02&amp;purpose=00"
                                         class="btn-upi-pay">
                                         <span>&#128241; Tap to Pay &#8377;300 via UPI App</span> &rarr;
                                     </a>
+                                    <div class="upi-pay-note" style="font-size: 0.72rem; color: var(--foam); text-align: center; margin-top: 0.35rem; opacity: 0.9;">
+                                        ⚡ Opens in UPI Scanner Mode &middot; Enter <strong>&#8377;<span id="amountHint">300</span></strong> to pay
+                                    </div>
                                 </div>
                             </div>
 
@@ -500,7 +503,7 @@
     </footer>
 
     <script th:src="@{/js/navbar.js(v=2)}" src="/js/navbar.js?v=2"></script>
-    <script th:src="@{/js/register.js(v=7)}" src="/js/register.js?v=7"></script>
+    <script th:src="@{/js/register.js(v=8)}" src="/js/register.js?v=8"></script>
 </body>
 
 </html>
