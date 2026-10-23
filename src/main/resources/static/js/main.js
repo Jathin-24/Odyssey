@@ -21,58 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize Day 1 view
     switchScheduleDay('day1');
 
-    // Mobile Navigation Toggle
-    const navToggle = document.getElementById('navToggle') || document.querySelector('.nav-toggle');
-    const navMenu = document.getElementById('navMenu') || document.querySelector('.nav ul');
-
-    if (navToggle && navMenu) {
-        function openMenu() {
-            navToggle.classList.add('open');
-            navToggle.setAttribute('aria-expanded', 'true');
-            navMenu.classList.add('open');
-            document.body.classList.add('nav-open');
-        }
-
-        function closeMenu() {
-            navToggle.classList.remove('open');
-            navToggle.setAttribute('aria-expanded', 'false');
-            navMenu.classList.remove('open');
-            document.body.classList.remove('nav-open');
-        }
-
-        navToggle.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (navMenu.classList.contains('open')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        });
-
-        navMenu.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                closeMenu();
-            });
-        });
-
-        document.addEventListener('click', function (e) {
-            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                closeMenu();
-            }
-        });
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && navMenu.classList.contains('open')) {
-                closeMenu();
-            }
-        });
-
-        window.addEventListener('resize', function () {
-            if (window.innerWidth > 1024 && navMenu.classList.contains('open')) {
-                closeMenu();
-            }
-        });
-    }
+    // NOTE: the mobile hamburger is handled solely by navbar.js (loaded on every page).
+    // A duplicate implementation here used to open the menu and instantly close it again.
 });
 
 // Day 1 & Day 2 Schedule Button Switcher
