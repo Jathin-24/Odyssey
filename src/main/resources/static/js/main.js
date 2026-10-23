@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize Day 1 view
     switchScheduleDay('day1');
+    // NOTE: the mobile hamburger is handled solely by navbar.js (loaded on every page).
+    // A duplicate implementation here used to open the menu and instantly close it again.
 });
 
 // Day 1 & Day 2 Schedule Button Switcher
