@@ -5,6 +5,8 @@
         var menu = document.getElementById('navMenu') || document.querySelector('.nav ul');
 
         if (!toggle || !menu) return;
+        if (toggle.dataset.navbarInitialized === 'true') return;
+        toggle.dataset.navbarInitialized = 'true';
 
         function openNav() {
             toggle.classList.add('open');
@@ -21,6 +23,7 @@
         }
 
         toggle.addEventListener('click', function (e) {
+            e.preventDefault();
             e.stopPropagation();
             if (menu.classList.contains('open')) {
                 closeNav();

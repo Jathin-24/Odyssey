@@ -11,8 +11,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/style.css(v=8)}" href="/css/style.css?v=8">
-    <link rel="stylesheet" th:href="@{/css/register.css(v=4)}" href="/css/register.css?v=4">
+    <link rel="stylesheet" th:href="@{/css/style.css(v=18)}" href="/css/style.css?v=18">
+    <link rel="stylesheet" th:href="@{/css/register.css(v=5)}" href="/css/register.css?v=5">
 </head>
 
 <body class="reg-page">
@@ -363,29 +363,25 @@
 
                 <div class="payment-box">
                     <div class="payment-grid">
-                        <!-- Left: Dynamic QR Code with payment.jpeg as background -->
+                        <!-- Left: Official Standee QR Code -->
                         <div class="qr-card">
                             <!-- Standee Header Badge -->
                             <div class="standee-header-badge">
                                 <span class="phonepe-dot"></span>
-                                <span>Official Dynamic UPI QR</span>
+                                <span>Official PhonePe UPI QR</span>
                             </div>
 
-                            <!-- PhonePe Standee with payment.jpeg as background & Dynamic QR overlaid -->
+                            <!-- PhonePe Standee with Authentic Scannable Original QR -->
                             <div class="phonepe-standee-wrapper">
                                 <img th:src="@{/images/payment.jpeg}" src="/images/payment.jpeg"
-                                    alt="PhonePe QR Standee - Shaik Sumaya" class="standee-bg-img">
-                                <div class="dynamic-qr-overlay">
-                                    <img id="upiQrImage" class="dynamic-qr-img"
-                                        src="https://api.qrserver.com/v1/create-qr-code/?size=600x600&amp;data=upi%3A%2F%2Fpay%3Fpa%3D7981705559-4%40ybl%26pn%3DShaik%2520Sumaya%26am%3D300%26cu%3DINR%26tn%3DOdyssey%2520Registration%2520(3%2520persons)"
-                                        alt="Dynamic PhonePe UPI Payment QR Code">
-                                </div>
+                                    alt="PhonePe QR Standee - Shaik Sumaya" class="standee-bg-img" id="officialStandeeImg">
                             </div>
 
                             <!-- Payee Name & Verified UPI ID -->
                             <div class="payee-box">
                                 <div class="payee-title">SHAIK SUMAYA</div>
                                 <div class="payee-upi-id">UPI ID : <strong>7981705559-4@ybl</strong></div>
+                                <div class="payee-phone">PhonePe / GPay : <strong>7981705559</strong></div>
                             </div>
 
                             <!-- Dynamic Amount Display -->
@@ -394,23 +390,38 @@
                                 <div class="amount-sub" id="amountSub">(&#8377;100 &times; 3 persons)</div>
                             </div>
 
-                            <!-- UPI Actions -->
+                            <!-- UPI Actions & Quick Copy Options -->
                             <div class="upi-details-wrap">
-                                <button type="button" class="upi-copy-btn" id="copyUpiBtn" title="Click to copy UPI ID">
-                                    <span id="copyBtnText">7981705559-4@ybl</span>
-                                    <span>&#128203;</span>
-                                </button>
+                                <div class="upi-copy-row">
+                                    <button type="button" class="upi-copy-btn" id="copyUpiBtn" title="Click to copy UPI ID">
+                                        <span id="copyBtnText">7981705559-4@ybl</span>
+                                        <span>&#128203; Copy UPI</span>
+                                    </button>
+                                    <button type="button" class="upi-copy-btn phone-btn" id="copyPhoneBtn" title="Click to copy Mobile Number">
+                                        <span id="copyPhoneBtnText">7981705559</span>
+                                        <span>&#128222; Copy Mobile</span>
+                                    </button>
+                                </div>
+
                                 <div class="upi-actions-col">
                                     <a id="upiPayLink"
-                                        href="upi://pay?pa=7981705559-4@ybl&amp;pn=Shaik%20Sumaya&amp;am=300&amp;cu=INR&amp;tn=Odyssey%20Registration%20(3%20persons)"
+                                        href="upi://pay?pa=7981705559-4@ybl&amp;pn=Shaik%20Sumaya&amp;am=300&amp;cu=INR"
                                         class="btn-upi-pay">
                                         <span>&#128241; Tap to Pay &#8377;300 via UPI App</span> &rarr;
                                     </a>
-                                    <!-- <a th:href="@{/images/payment.jpeg}" href="/images/payment.jpeg" target="_blank"
-                                        rel="noopener noreferrer" class="link-standee">
-                                        &#128269; View Original Standee &nearr;
-                                    </a> -->
                                 </div>
+                            </div>
+
+                            <!-- Security Decline Troubleshooting Box -->
+                            <div class="payment-help-alert">
+                                <div class="payment-help-title">
+                                    <span>&#9888;&#65039;</span> <strong>Declined for security reasons?</strong>
+                                </div>
+                                <p class="payment-help-text">
+                                    Banks often restrict browser payment links.
+                                    <br>
+                                    <strong>Solution:</strong> Open <strong>PhonePe</strong>, <strong>Google Pay</strong>, or <strong>Paytm</strong> directly &rarr; <strong>Scan the QR code above</strong> or send to Mobile Number <strong>7981705559</strong>.
+                                </p>
                             </div>
                         </div>
 
@@ -488,8 +499,8 @@
                 href="https://kitsecellgnt.com/" target="_blank" rel="noopener noreferrer">kitsecellgnt.com</a></p>
     </footer>
 
-    <script th:src="@{/js/navbar.js(v=1)}" src="/js/navbar.js?v=1"></script>
-    <script th:src="@{/js/register.js(v=6)}" src="/js/register.js?v=6"></script>
+    <script th:src="@{/js/navbar.js(v=2)}" src="/js/navbar.js?v=2"></script>
+    <script th:src="@{/js/register.js(v=7)}" src="/js/register.js?v=7"></script>
 </body>
 
 </html>

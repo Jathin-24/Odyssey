@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const amountBadge = document.getElementById('amountBadge');
     const amountSub = document.getElementById('amountSub');
-    const qrImage = document.getElementById('upiQrImage');
     const upiPayLink = document.getElementById('upiPayLink');
 
     const baseUpiId = "7981705559-4@ybl";
+    const basePhone = "7981705559";
     const payeeName = "Shaik Sumaya";
 
     function updateTeamAndPayment(size) {
@@ -65,13 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
             amountSub.textContent = `(₹100 × ${size} persons)`;
         }
 
-        // Build UPI URI & dynamic QR code URL
-        const note = `Odyssey Registration (${size} persons)`;
-        const upiUri = `upi://pay?pa=${encodeURIComponent(baseUpiId)}&pn=${encodeURIComponent(payeeName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent(note)}`;
+        // Clean UPI URI without bank-flagged tn notes
+        const upiUri = `upi://pay?pa=${encodeURIComponent(baseUpiId)}&pn=${encodeURIComponent(payeeName)}&am=${totalAmount}&cu=INR`;
         
-        if (qrImage) {
-            qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(upiUri)}`;
-        }
         if (upiPayLink) {
             upiPayLink.href = upiUri;
             upiPayLink.innerHTML = `<span>📱 Tap to Pay ₹${totalAmount} via UPI App</span> &rarr;`;
@@ -99,11 +95,40 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTeamAndPayment(3);
     }
 
-    // 2. UPI ID copy button with clipboard fallback
+    // 2. UPI ID & Phone copy buttons with clipboard fallback
     const copyUpiBtn = document.getElementById('copyUpiBtn');
     const copyBtnText = document.getElementById('copyBtnText');
+    const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+    const copyPhoneBtnText = document.getElementById('copyPhoneBtnText');
 
-    function fallbackCopyText(text) {
+    function copyToClipboard(text, btnElement, textElement, successMsg, defaultText) {
+        function triggerSuccess() {
+            if (textElement) textElement.textContent = successMsg;
+            if (btnElement) {
+                btnElement.style.background = 'var(--aqua)';
+                btnElement.style.color = 'var(--deep)';
+                btnElement.style.borderColor = 'var(--aqua)';
+            }
+            setTimeout(() => {
+                if (textElement) textElement.textContent = defaultText;
+                if (btnElement) {
+                    btnElement.style.background = '';
+                    btnElement.style.color = '';
+                    btnElement.style.borderColor = '';
+                }
+            }, 2000);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(triggerSuccess).catch(() => {
+                fallbackCopy(text, triggerSuccess);
+            });
+        } else {
+            fallbackCopy(text, triggerSuccess);
+        }
+    }
+
+    function fallbackCopy(text, onSuccess) {
         const temp = document.createElement('textarea');
         temp.value = text;
         temp.style.position = 'fixed';
@@ -112,18 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         temp.select();
         try {
             document.execCommand('copy');
-            if (copyBtnText) copyBtnText.textContent = '✓ Copied!';
-            if (copyUpiBtn) {
-                copyUpiBtn.style.background = 'var(--aqua)';
-                copyUpiBtn.style.color = 'var(--deep)';
-            }
-            setTimeout(() => {
-                if (copyBtnText) copyBtnText.textContent = baseUpiId;
-                if (copyUpiBtn) {
-                    copyUpiBtn.style.background = '';
-                    copyUpiBtn.style.color = '';
-                }
-            }, 2000);
+            if (onSuccess) onSuccess();
         } catch (e) {
             // silent fail
         }
@@ -132,23 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (copyUpiBtn) {
         copyUpiBtn.addEventListener('click', () => {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(baseUpiId).then(() => {
-                    const prev = copyBtnText ? copyBtnText.textContent : baseUpiId;
-                    if (copyBtnText) copyBtnText.textContent = '✓ Copied!';
-                    copyUpiBtn.style.background = 'var(--aqua)';
-                    copyUpiBtn.style.color = 'var(--deep)';
-                    setTimeout(() => {
-                        if (copyBtnText) copyBtnText.textContent = prev;
-                        copyUpiBtn.style.background = '';
-                        copyUpiBtn.style.color = '';
-                    }, 2000);
-                }).catch(() => {
-                    fallbackCopyText(baseUpiId);
-                });
-            } else {
-                fallbackCopyText(baseUpiId);
-            }
+            copyToClipboard(baseUpiId, copyUpiBtn, copyBtnText, '✓ Copied UPI ID!', baseUpiId);
+        });
+    }
+
+    if (copyPhoneBtn) {
+        copyPhoneBtn.addEventListener('click', () => {
+            copyToClipboard(basePhone, copyPhoneBtn, copyPhoneBtnText, '✓ Copied Number!', basePhone);
         });
     }
 

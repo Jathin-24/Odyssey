@@ -14,6 +14,8 @@
 }
 
 .reg-container {
+
+
     max-width: 920px;
     margin: 0 auto;
     padding: 0 1.5rem;
@@ -33,6 +35,7 @@
     transition: transform 0.2s, color 0.2s;
     margin-bottom: 1.5rem;
 }
+
 .nav-back-link:hover {
     color: var(--foam);
     transform: translateX(-4px);
@@ -43,6 +46,7 @@
     text-align: center;
     margin-bottom: 2.5rem;
 }
+
 .reg-badge {
     display: inline-flex;
     align-items: center;
@@ -59,6 +63,7 @@
     margin-bottom: 1rem;
     box-shadow: 0 0 15px rgba(25, 211, 230, 0.15);
 }
+
 .reg-header h1 {
     font-family: 'Cinzel', serif;
     font-size: clamp(2rem, 5vw, 3.2rem);
@@ -71,6 +76,7 @@
     margin-bottom: 0.8rem;
     text-shadow: 0 0 30px rgba(25, 211, 230, 0.2);
 }
+
 .reg-header p {
     color: var(--muted);
     font-size: 1.05rem;
@@ -87,6 +93,7 @@
     gap: 1.5rem;
     margin: 2rem 0 2.5rem;
 }
+
 .highlight-item {
     display: inline-flex;
     align-items: center;
@@ -98,6 +105,7 @@
     font-size: 0.85rem;
     color: var(--text);
 }
+
 .highlight-item span.icon {
     font-size: 1.1rem;
 }
@@ -142,6 +150,7 @@
     padding-bottom: 2.4rem;
     border-bottom: 1px solid rgba(25, 211, 230, 0.12);
 }
+
 .form-section:last-child {
     border-bottom: none;
     margin-bottom: 0;
@@ -154,6 +163,7 @@
     gap: 0.8rem;
     margin-bottom: 1.4rem;
 }
+
 .section-icon-wrap {
     width: 38px;
     height: 38px;
@@ -166,6 +176,7 @@
     color: var(--aqua);
     font-size: 1.2rem;
 }
+
 .section-head h2 {
     font-family: 'Cinzel', serif;
     font-size: 1.35rem;
@@ -173,6 +184,7 @@
     font-weight: 700;
     letter-spacing: 1px;
 }
+
 .section-head .desc {
     color: var(--muted);
     font-size: 0.85rem;
@@ -185,9 +197,11 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem;
 }
+
 .form-grid.single {
     grid-template-columns: 1fr;
 }
+
 @media (max-width: 720px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -200,9 +214,11 @@
     flex-direction: column;
     gap: 0.45rem;
 }
+
 .form-group.full-width {
     grid-column: 1 / -1;
 }
+
 .form-label {
     font-size: 0.88rem;
     font-weight: 500;
@@ -211,10 +227,12 @@
     justify-content: space-between;
     align-items: center;
 }
+
 .form-label .required {
     color: var(--aqua);
     margin-left: 0.25rem;
 }
+
 .form-label .hint {
     font-size: 0.75rem;
     color: var(--muted);
@@ -222,7 +240,9 @@
 }
 
 /* Input Fields */
-.form-input, .form-textarea, .form-select {
+.form-input,
+.form-textarea,
+.form-select {
     width: 100%;
     padding: 0.85rem 1.1rem;
     background: rgba(2, 17, 31, 0.75);
@@ -233,19 +253,26 @@
     font-size: 0.95rem;
     transition: all 0.25s ease;
 }
-.form-input::placeholder, .form-textarea::placeholder {
+
+.form-input::placeholder,
+.form-textarea::placeholder {
     color: rgba(143, 184, 198, 0.5);
 }
-.form-input:focus, .form-textarea:focus, .form-select:focus {
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
     outline: none;
     border-color: var(--aqua);
     background: rgba(2, 17, 31, 0.95);
     box-shadow: 0 0 16px rgba(25, 211, 230, 0.35);
 }
+
 .form-textarea {
     resize: vertical;
     min-height: 110px;
 }
+
 .char-count {
     text-align: right;
     font-size: 0.75rem;
@@ -260,6 +287,7 @@
     gap: 1rem;
     margin-top: 0.5rem;
 }
+
 .track-card {
     position: relative;
     border: 1px solid rgba(25, 211, 230, 0.2);
@@ -272,30 +300,36 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
 .track-card input[type="radio"] {
     position: absolute;
     opacity: 0;
     pointer-events: none;
 }
+
 .track-card:hover {
     transform: translateY(-3px);
     border-color: rgba(25, 211, 230, 0.6);
     background: rgba(10, 79, 122, 0.35);
 }
+
 .track-card.selected {
     border-color: var(--aqua);
     background: linear-gradient(145deg, rgba(10, 79, 122, 0.6), rgba(2, 17, 31, 0.85));
     box-shadow: 0 0 20px rgba(25, 211, 230, 0.3);
 }
+
 .track-top {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 0.6rem;
 }
+
 .track-icon {
     font-size: 1.6rem;
 }
+
 .track-badge {
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -306,17 +340,20 @@
     color: var(--foam);
     border: 1px solid rgba(25, 211, 230, 0.3);
 }
+
 .track-name {
     font-weight: 600;
     color: #ffffff;
     font-size: 0.98rem;
     margin-bottom: 0.35rem;
 }
+
 .track-desc {
     color: var(--muted);
     font-size: 0.8rem;
     line-height: 1.45;
 }
+
 .track-check {
     width: 20px;
     height: 20px;
@@ -329,6 +366,7 @@
     color: transparent;
     transition: all 0.2s;
 }
+
 .track-card.selected .track-check {
     background: var(--aqua);
     color: var(--deep);
@@ -343,6 +381,7 @@
     gap: 0.65rem;
     margin-top: 0.5rem;
 }
+
 .stage-pill {
     position: relative;
     padding: 0.65rem 1.2rem;
@@ -358,15 +397,18 @@
     align-items: center;
     gap: 0.5rem;
 }
+
 .stage-pill input[type="radio"] {
     position: absolute;
     opacity: 0;
     pointer-events: none;
 }
+
 .stage-pill:hover {
     border-color: var(--aqua);
     background: rgba(10, 79, 122, 0.3);
 }
+
 .stage-pill.selected {
     background: var(--aqua);
     color: var(--deep);
@@ -382,11 +424,13 @@
     gap: 0.8rem;
     margin-top: 0.5rem;
 }
+
 @media (max-width: 600px) {
     .team-sizes-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 .team-size-card {
     position: relative;
     padding: 0.9rem 0.6rem;
@@ -397,29 +441,35 @@
     cursor: pointer;
     transition: all 0.25s ease;
 }
+
 .team-size-card input[type="radio"] {
     position: absolute;
     opacity: 0;
     pointer-events: none;
 }
+
 .team-size-card:hover {
     border-color: var(--aqua);
     background: rgba(10, 79, 122, 0.3);
 }
+
 .team-size-card.selected {
     border-color: var(--aqua);
     background: linear-gradient(135deg, rgba(10, 79, 122, 0.7), rgba(2, 17, 31, 0.9));
     box-shadow: 0 0 18px rgba(25, 211, 230, 0.3);
 }
+
 .team-size-num {
     font-size: 1.4rem;
     font-weight: 700;
     color: var(--foam);
     font-family: 'Cinzel', serif;
 }
+
 .team-size-card.selected .team-size-num {
     color: var(--aqua);
 }
+
 .team-size-label {
     font-size: 0.75rem;
     color: var(--muted);
@@ -434,6 +484,7 @@
     flex-direction: column;
     gap: 1.2rem;
 }
+
 .member-block {
     background: rgba(2, 17, 31, 0.5);
     border: 1px solid rgba(25, 211, 230, 0.18);
@@ -441,9 +492,11 @@
     padding: 1.4rem;
     transition: all 0.3s ease;
 }
+
 .member-block.hidden {
     display: none;
 }
+
 .member-block-title {
     font-size: 0.95rem;
     font-weight: 600;
@@ -453,6 +506,7 @@
     align-items: center;
     gap: 0.5rem;
 }
+
 .member-badge {
     font-size: 0.7rem;
     background: rgba(25, 211, 230, 0.15);
@@ -465,6 +519,7 @@
 .terms-agreement {
     margin-bottom: 2rem;
 }
+
 .checkbox-custom {
     display: flex;
     align-items: flex-start;
@@ -474,6 +529,7 @@
     color: var(--muted);
     line-height: 1.5;
 }
+
 .checkbox-custom input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -485,6 +541,7 @@
 .submit-wrap {
     text-align: center;
 }
+
 .btn-submit {
     display: inline-flex;
     align-items: center;
@@ -506,10 +563,12 @@
     box-shadow: 0 0 30px rgba(25, 211, 230, 0.45);
     transition: transform 0.25s, box-shadow 0.25s;
 }
+
 .btn-submit:hover {
     transform: translateY(-3px);
     box-shadow: 0 0 45px rgba(25, 211, 230, 0.8);
 }
+
 .btn-submit:active {
     transform: translateY(0);
 }
@@ -530,18 +589,21 @@
     text-align: center;
     margin-bottom: 2rem;
 }
+
 .pass-success-icon {
     font-size: 3rem;
     display: block;
     margin-bottom: 0.5rem;
     animation: float 4s ease-in-out infinite;
 }
+
 .pass-success-message h1 {
     font-family: 'Cinzel', serif;
     font-size: clamp(1.8rem, 4vw, 2.6rem);
     color: #ffffff;
     margin-bottom: 0.4rem;
 }
+
 .pass-success-message p {
     color: var(--foam);
     font-size: 1rem;
@@ -565,13 +627,16 @@
     padding: 2.2rem 2.4rem;
     position: relative;
 }
+
 .pass-perforation {
     width: 2px;
     background-image: linear-gradient(to bottom, rgba(25, 211, 230, 0.4) 50%, transparent 50%);
     background-size: 2px 14px;
     position: relative;
 }
-.pass-perforation::before, .pass-perforation::after {
+
+.pass-perforation::before,
+.pass-perforation::after {
     content: "";
     position: absolute;
     width: 26px;
@@ -582,9 +647,11 @@
     transform: translateX(-50%);
     border: 1px solid rgba(25, 211, 230, 0.4);
 }
+
 .pass-perforation::before {
     top: -14px;
 }
+
 .pass-perforation::after {
     bottom: -14px;
 }
@@ -604,18 +671,28 @@
     .voyage-pass {
         flex-direction: column;
     }
+
     .pass-perforation {
         width: 100%;
         height: 2px;
         background-image: linear-gradient(to right, rgba(25, 211, 230, 0.4) 50%, transparent 50%);
         background-size: 14px 2px;
     }
-    .pass-perforation::before, .pass-perforation::after {
+
+    .pass-perforation::before,
+    .pass-perforation::after {
         top: 50%;
         transform: translateY(-50%);
     }
-    .pass-perforation::before { left: -14px; }
-    .pass-perforation::after  { right: -14px; left: auto; }
+
+    .pass-perforation::before {
+        left: -14px;
+    }
+
+    .pass-perforation::after {
+        right: -14px;
+        left: auto;
+    }
 }
 
 /* Ticket Details */
@@ -627,6 +704,7 @@
     padding-bottom: 1.2rem;
     margin-bottom: 1.5rem;
 }
+
 .pass-brand {
     font-family: 'Cinzel', serif;
     font-size: 1.3rem;
@@ -634,6 +712,7 @@
     letter-spacing: 3px;
     color: var(--aqua);
 }
+
 .pass-voyage-tag {
     font-size: 0.75rem;
     letter-spacing: 2px;
@@ -648,12 +727,14 @@
 .pass-title-row {
     margin-bottom: 1.8rem;
 }
+
 .pass-team-label {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--muted);
 }
+
 .pass-team-name {
     font-family: 'Cinzel', serif;
     font-size: 2.2rem;
@@ -663,6 +744,7 @@
     line-height: 1.2;
     margin: 0.2rem 0 0.5rem;
 }
+
 .pass-track-pill {
     display: inline-flex;
     align-items: center;
@@ -814,23 +896,27 @@
         gap: 1rem;
         padding: 1rem;
     }
+
     .pass-venue-divider {
         width: 100%;
         height: 1px;
         background: linear-gradient(90deg, transparent, rgba(25, 211, 230, 0.35), transparent);
     }
 }
+
 @media (max-width: 580px) {
     .pass-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 .pass-field-label {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: var(--muted);
 }
+
 .pass-field-val {
     font-size: 0.95rem;
     font-weight: 600;
@@ -845,12 +931,14 @@
     padding-top: 1rem;
     border-top: 1px solid rgba(25, 211, 230, 0.12);
 }
+
 .crew-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.4rem;
 }
+
 .crew-chip {
     font-size: 0.8rem;
     background: rgba(2, 17, 31, 0.6);
@@ -864,12 +952,14 @@
 .stub-code {
     margin-bottom: 1rem;
 }
+
 .stub-id-label {
     font-size: 0.7rem;
     letter-spacing: 2px;
     color: var(--muted);
     text-transform: uppercase;
 }
+
 .stub-id {
     font-family: 'Cinzel', serif;
     font-size: 1.8rem;
@@ -877,6 +967,7 @@
     color: var(--aqua);
     letter-spacing: 2px;
 }
+
 .stub-status {
     display: inline-block;
     background: rgba(34, 197, 94, 0.15);
@@ -901,6 +992,7 @@
     height: 55px;
     padding: 0 1rem;
 }
+
 .barcode-bar {
     background: var(--foam);
     height: 100%;
@@ -921,6 +1013,7 @@
     gap: 1rem;
     margin-top: 2.5rem;
 }
+
 .btn-print {
     padding: 0.85rem 1.8rem;
     border-radius: 50px;
@@ -936,6 +1029,7 @@
     box-shadow: 0 0 20px rgba(25, 211, 230, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .btn-print:hover {
     transform: translateY(-2px);
     box-shadow: 0 0 30px rgba(25, 211, 230, 0.6);
@@ -954,6 +1048,7 @@
     gap: 0.5rem;
     transition: all 0.2s;
 }
+
 .btn-secondary:hover {
     border-color: var(--aqua);
     background: rgba(10, 79, 122, 0.7);
@@ -1081,6 +1176,17 @@
     word-break: break-all;
 }
 
+.payee-phone {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 0.25rem;
+}
+
+.payee-phone strong {
+    color: var(--foam);
+}
+
 .amount-container {
     margin-top: 0.7rem;
     background: rgba(37, 211, 102, 0.12);
@@ -1108,25 +1214,83 @@
     margin-top: 0.8rem;
 }
 
+.upi-copy-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    width: 100%;
+}
+
 .upi-copy-btn {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.5rem;
     background: rgba(2, 17, 31, 0.85);
     border: 1px solid rgba(25, 211, 230, 0.4);
     color: var(--foam);
     font-size: 0.82rem;
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
+    padding: 0.55rem 0.95rem;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
     transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
 }
 
 .upi-copy-btn:hover {
-    background: var(--aqua);
-    color: var(--deep);
-    box-shadow: 0 0 14px rgba(25, 211, 230, 0.6);
+    background: rgba(25, 211, 230, 0.15);
+    border-color: var(--aqua);
+    color: var(--aqua);
+    box-shadow: 0 0 14px rgba(25, 211, 230, 0.35);
+}
+
+.upi-copy-btn.phone-btn {
+    border-color: rgba(37, 211, 102, 0.4);
+}
+
+.upi-copy-btn.phone-btn:hover {
+    background: rgba(37, 211, 102, 0.15);
+    border-color: #4ade80;
+    color: #4ade80;
+    box-shadow: 0 0 14px rgba(37, 211, 102, 0.35);
+}
+
+.payment-help-alert {
+    margin-top: 0.95rem;
+    background: rgba(10, 79, 122, 0.35);
+    border: 1px solid rgba(25, 211, 230, 0.3);
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.payment-help-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--aqua);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    font-size: 0.82rem;
+}
+
+.payment-help-text {
+    color: var(--text);
+    margin: 0;
+}
+
+.payment-help-text strong {
+    color: #ffffff;
+}
+
+.payment-help-text em {
+    color: #ff6b6b;
+    font-style: normal;
+    font-weight: 600;
 }
 
 .upi-actions-col {
@@ -1182,16 +1346,22 @@
     cursor: pointer;
     transition: all 0.25s ease;
 }
+
 .file-upload-box:hover {
     border-color: var(--aqua);
     background: rgba(10, 79, 122, 0.3);
 }
+
 .file-upload-input {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
     cursor: pointer;
 }
+
 .preview-img {
     max-height: 120px;
     border-radius: 8px;
@@ -1206,51 +1376,80 @@
         background: #ffffff !important;
         color: #000000 !important;
     }
-    .nav, .footer, .pass-actions, .nav-back-link, .waves {
+
+    .nav,
+    .footer,
+    .pass-actions,
+    .nav-back-link,
+    .waves {
         display: none !important;
     }
+
     .reg-page {
         padding: 0 !important;
         background: none !important;
     }
+
     .voyage-pass {
         border: 2px solid #000000 !important;
         box-shadow: none !important;
         background: #ffffff !important;
         color: #000000 !important;
     }
-    .pass-brand, .stub-id, .pass-team-name, .pass-field-val {
+
+    .pass-brand,
+    .stub-id,
+    .pass-team-name,
+    .pass-field-val {
         color: #000000 !important;
     }
-    .pass-team-label, .pass-field-label, .stub-id-label, .stub-note {
+
+    .pass-team-label,
+    .pass-field-label,
+    .stub-id-label,
+    .stub-note {
         color: #555555 !important;
     }
+
     .barcode-bar {
         background: #000000 !important;
     }
+
     .stub-status {
         border-color: #000000 !important;
         color: #000000 !important;
     }
-    .cal-reminder-card, .cal-modal-overlay {
+
+    .cal-reminder-card,
+    .cal-modal-overlay {
         display: none !important;
     }
+
     .pass-venue-strip {
         background: #f8fafc !important;
         border: 1px solid #000000 !important;
         box-shadow: none !important;
         color: #000000 !important;
     }
-    .pass-venue-title, .pass-venue-val, .stub-venue-val {
+
+    .pass-venue-title,
+    .pass-venue-val,
+    .stub-venue-val {
         color: #000000 !important;
     }
-    .pass-venue-sub, .pass-venue-tag, .stub-venue-inst, .stub-venue-date {
+
+    .pass-venue-sub,
+    .pass-venue-tag,
+    .stub-venue-inst,
+    .stub-venue-date {
         color: #333333 !important;
     }
+
     .stub-venue-box {
         border: 1px solid #000000 !important;
         background: #f8fafc !important;
     }
+
     .pass-success-venue-pill {
         border-color: #000000 !important;
         color: #000000 !important;
@@ -1301,9 +1500,20 @@
 }
 
 @keyframes pulseGlow {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(74, 222, 128, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+    }
 }
 
 .cal-reminder-content {
@@ -1447,8 +1657,13 @@
 }
 
 @keyframes fadeInModal {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .cal-modal-card {
@@ -1464,8 +1679,15 @@
 }
 
 @keyframes scaleInModal {
-    from { transform: scale(0.92); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .cal-modal-icon {
@@ -1498,9 +1720,11 @@
         flex-direction: column;
         align-items: flex-start;
     }
+
     .cal-reminder-action {
         width: 100%;
     }
+
     .btn-google-cal {
         width: 100%;
     }
@@ -1689,6 +1913,3 @@
     font-size: 1.3rem;
     filter: drop-shadow(0 0 6px rgba(25, 211, 230, 0.6));
 }
-
-
-
