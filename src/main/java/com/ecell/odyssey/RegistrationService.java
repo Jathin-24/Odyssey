@@ -1,7 +1,11 @@
 package com.ecell.odyssey;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Service;
@@ -259,7 +263,72 @@ public class RegistrationService {
     }
 
     public List<Registration> getAll() {
-        return repository.findAllByOrderByRegisteredAtDesc();
+        List<Registration> list = repository.findAll();
+        if (list == null || list.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 1. Identify each team's latest registeredAt timestamp and primary team key
+        // Group all members of the same team together using their clean team name or groupId.
+        Map<String, LocalDateTime> teamRegisteredAtMap = new HashMap<>();
+        for (Registration r : list) {
+            String key = extractTeamGroupKey(r);
+            LocalDateTime dt = r.getRegisteredAt() != null ? r.getRegisteredAt() : LocalDateTime.MIN;
+            teamRegisteredAtMap.merge(key, dt, (oldVal, newVal) -> newVal.isAfter(oldVal) ? newVal : oldVal);
+        }
+
+        // 2. Sort registrations:
+        // Primary: Team registration time DESC (newest teams appear first)
+        // Secondary: Team key (keeps all team members strictly together)
+        // Tertiary: Role priority (Leader = 1, Member 2 = 2, Member 3 = 3, Member 4 = 4, Member 5 = 5)
+        // Quaternary: Pass ID ASC (deterministic tiebreaker)
+        return list.stream()
+            .sorted(Comparator
+                .<Registration, LocalDateTime>comparing(
+                    r -> teamRegisteredAtMap.getOrDefault(extractTeamGroupKey(r), LocalDateTime.MIN),
+                    Comparator.reverseOrder()
+                )
+                .thenComparing(this::extractTeamGroupKey)
+                .thenComparingInt(this::getParticipantRoleRank)
+                .thenComparing(r -> r.getId() != null ? r.getId() : "")
+            )
+            .toList();
+    }
+
+    public String extractTeamGroupKey(Registration r) {
+        if (r == null) return "";
+        if (r.getTeamName() != null && !r.getTeamName().isBlank()) {
+            return r.getTeamName().trim().toLowerCase();
+        }
+        if (r.getGroupId() != null && !r.getGroupId().isBlank()) {
+            return r.getGroupId().trim();
+        }
+        if (r.getId() != null && !r.getId().isBlank()) {
+            return r.getId().replaceAll("-M\\d+$", "").trim();
+        }
+        return "";
+    }
+
+    public int getParticipantRoleRank(Registration r) {
+        if (r == null) return 99;
+        String role = r.getParticipantRole();
+        if (role != null) {
+            String lower = role.trim().toLowerCase();
+            if (lower.contains("leader") || lower.equals("lead")) return 1;
+            if (lower.contains("member 2") || lower.endsWith("2")) return 2;
+            if (lower.contains("member 3") || lower.endsWith("3")) return 3;
+            if (lower.contains("member 4") || lower.endsWith("4")) return 4;
+            if (lower.contains("member 5") || lower.endsWith("5")) return 5;
+        }
+        String id = r.getId();
+        if (id != null) {
+            if (!id.contains("-M")) return 1;
+            if (id.endsWith("-M2")) return 2;
+            if (id.endsWith("-M3")) return 3;
+            if (id.endsWith("-M4")) return 4;
+            if (id.endsWith("-M5")) return 5;
+        }
+        return 10;
     }
 
     public long getTotalCount() {

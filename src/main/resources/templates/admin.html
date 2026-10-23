@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css(v=18)}" href="/css/style.css?v=18">
     <link rel="stylesheet" th:href="@{/css/register.css}" href="/css/register.css">
-    <link rel="stylesheet" th:href="@{/css/admin.css(v=1)}" href="/css/admin.css?v=1">
+    <link rel="stylesheet" th:href="@{/css/admin.css(v=2)}" href="/css/admin.css?v=2">
 </head>
 <body class="admin-page">
 
@@ -236,9 +236,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="r, iterStat : ${registrations}" th:attr="data-dept=${r.dept}">
+                <tr th:each="r, iterStat : ${registrations}"
+                    th:attr="data-dept=${r.dept}"
+                    th:classappend="${(r.participantRole == null or r.participantRole == 'Leader' or r.participantRole == '' or !r.id.contains('-M')) and iterStat.index > 0} ? 'team-separator' : ''">
                     <td style="text-align: center; color: var(--muted); font-weight: 600; white-space: nowrap;" class="sno-cell" th:text="${iterStat.count}">1</td>
                     <td style="white-space: nowrap;">
+                        <span th:if="${r.id.contains('-M')}" style="color: var(--muted); font-size: 0.82rem; margin-right: 0.25rem;">&#8627;</span>
                         <a th:href="@{'/register/pass/' + ${r.id}}" class="code-link" style="white-space: nowrap; display: inline-block;" th:text="${r.id}">ODY-1234</a>
                     </td>
                     <td style="white-space: nowrap;">
@@ -247,7 +250,15 @@
                     <td>
                         <div style="color: #ffffff; font-weight: 600;" th:text="${r.leaderName}">Rahul Sharma</div>
                         <div style="margin-top: 0.3rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
-                            <span class="track-tag" style="font-size: 0.68rem; padding: 0.12rem 0.5rem;" th:text="${r.participantRole != null and !r.participantRole.isBlank() ? r.participantRole : 'Member'}">Leader</span>
+                            <span th:if="${r.participantRole == null or r.participantRole == 'Leader' or r.participantRole == '' or !r.id.contains('-M')}"
+                                  class="track-tag" style="font-size: 0.68rem; padding: 0.15rem 0.55rem; background: rgba(34, 197, 94, 0.18); border-color: rgba(34, 197, 94, 0.45); color: #4ade80; font-weight: 700;">
+                                &#128081; Leader
+                            </span>
+                            <span th:unless="${r.participantRole == null or r.participantRole == 'Leader' or r.participantRole == '' or !r.id.contains('-M')}"
+                                  class="track-tag" style="font-size: 0.68rem; padding: 0.12rem 0.5rem; background: rgba(14, 165, 233, 0.15); border-color: rgba(25, 211, 230, 0.3); color: var(--aqua);"
+                                  th:text="${r.participantRole != null and !r.participantRole.isBlank() ? r.participantRole : 'Member'}">
+                                Member
+                            </span>
                             <span style="font-size: 0.76rem; font-weight: 600; color: var(--foam); background: rgba(14, 165, 233, 0.15); padding: 0.12rem 0.55rem; border-radius: 4px; border: 1px solid rgba(25, 211, 230, 0.25);" th:text="'Team: ' + ${r.teamName}">Team: Innovators</span>
                         </div>
                     </td>

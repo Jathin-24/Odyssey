@@ -390,6 +390,9 @@
         table.manifest-table tr:hover {
             background: rgba(25, 211, 230, 0.05);
         }
+        table.manifest-table tr.team-separator td {
+            border-top: 2.5px solid rgba(25, 211, 230, 0.35) !important;
+        }
         .code-link {
             font-family: monospace;
             font-weight: 700;
